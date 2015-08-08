@@ -17,28 +17,26 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
-    hypothesis = X * theta;
-    % display(size(hypothesis));
-    % display(size(y));
+    accTheta = [];
+
+    predictX = X * theta;
+        
+    errors = predictX - y;
+            
+    for (thetaIndex = 1: size(X,2))
+   
+        errorsForParam = errors' * X(:,thetaIndex);
     
-    variances = hypothesis - y; % Add a column of ones to variances
-    % display("size of variances")
-    % display(size(variances));
+        % display(errorForParam);
+        
+        tempTheta = theta(thetaIndex,1) - alpha / m * errorsForParam;
+          
+        accTheta = [accTheta; tempTheta];
+        
+    end
     
-    % display("size of variances * X")
-    % display(X' * variances);
+    theta = accTheta;
     
-    theta = theta - alpha / m * X' * variances;
-    % display(size(theta))
-
-
-
-
-
-
-
-
-
     % ============================================================
 
     % Save the cost J in every iteration    
