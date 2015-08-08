@@ -17,7 +17,19 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
-
+    hypothesis = X * theta;
+    % display(size(hypothesis));
+    % display(size(y));
+    
+    variances = hypothesis - y; % Add a column of ones to variances
+    % display("size of variances")
+    % display(size(variances));
+    
+    % display("size of variances * X")
+    % display(X' * variances);
+    
+    theta = theta - alpha / m * X' * variances;
+    % display(size(theta))
 
 
 
