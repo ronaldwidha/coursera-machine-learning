@@ -22,9 +22,9 @@ grad = zeros(size(theta));
 
 z = X * theta;
 
-gz = 1 ./ (1 .+ e .^ -z);
+gz = 1 ./ (1 + e .^ -z);
 
-J = 1 / m * ( -y' * log(gz) - (1.-y)' * log(1-gz));
+J = 1 ./ m * ( -y' * log(gz) - (1.-y)' * log(1-gz));
 
 % for each J
 accGrad = [];

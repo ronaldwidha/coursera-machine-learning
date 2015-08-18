@@ -15,13 +15,16 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
+% to refactor so that can be used in costFunction.m
 
+z = X * theta;
 
+sigmoid = 1 ./ (1 + e .^ -z);
 
+% display(sigmoid);
 
-
+p = sigmoid >= 0.500000;
 
 % =========================================================================
-
 
 end
