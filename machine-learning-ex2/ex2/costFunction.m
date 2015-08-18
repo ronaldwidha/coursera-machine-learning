@@ -26,7 +26,6 @@ gz = 1 ./ (1 + e .^ -z);
 
 J = 1 ./ m * ( -y' * log(gz) - (1.-y)' * log(1-gz));
 
-% for each J
 accGrad = [];
 
 for (JIndex = 1: size(X,2)) 
