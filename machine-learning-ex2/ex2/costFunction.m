@@ -22,21 +22,13 @@ grad = zeros(size(theta));
 
 z = X * theta;
 
-gz = 1 ./ (1 + e .^ -z);
+hx = 1 ./ (1 + e .^ -z);
 
-J = 1 ./ m * ( -y' * log(gz) - (1.-y)' * log(1-gz));
+J = 1 ./ m * ( -y' * log(hx) - (1.-y)' * log(1-hx));
 
-accGrad = [];
 
-for (JIndex = 1: size(X,2)) 
-	tempGrad = [];
-	
-	tempGrad = 1 / m * (gz - y)' * X(:,JIndex);
-	
-	accGrad = [accGrad; tempGrad];
-end
-
-grad = accGrad;
+hxminusy = x'
+grad = 1 / m * X' .* (hxminusy);
 
 
 
