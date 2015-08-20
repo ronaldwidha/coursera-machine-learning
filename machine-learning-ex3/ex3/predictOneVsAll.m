@@ -33,15 +33,13 @@ X = [ones(m, 1) X];
 z = X * all_theta';
 
 % rows are data
-% probability per row
+% columns are probability for a given class (1,2,3 ... k)
+
 hx = 1 ./ (1 + e .^ -z);
 
 [val, index] = max(hx, [], 2);
 
 p = index;
-
-
-
 
 % =========================================================================
 

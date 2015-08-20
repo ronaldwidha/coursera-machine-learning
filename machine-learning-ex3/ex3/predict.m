@@ -23,6 +23,22 @@ p = zeros(size(X, 1), 1);
 
 
 
+%theta1 and 2 already have bias in it
+
+X = [ones(m,1) X];
+
+z2 = X * Theta1';
+a2 = 1 ./ (1 + e .^ -z2);
+
+a2 = [ones(size(a2,1),1) a2];
+
+z3 = a2 * Theta2';
+hx = 1 ./ (1 + e .^ -z3); 
+
+[val, index] = max(hx, [], 2);
+
+p = index;
+
 
 
 
