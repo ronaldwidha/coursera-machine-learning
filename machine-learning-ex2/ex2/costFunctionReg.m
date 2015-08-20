@@ -19,11 +19,11 @@ grad = zeros(size(theta));
 
 z = X * theta;
 
-gz = 1 ./ (1 + e .^ -z);
+hx = 1 ./ (1 + e .^ -z);
 
 theta1toend = [0; theta([2:end,:],:)];
 
-J = 1 ./ m * ( -y' * log(gz) - (1.-y)' * log(1-gz)) + lambda / (2*m) * sum(theta1toend.^2);
+J = 1 ./ m * ( -y' * log(hx) - (1.-y)' * log(1-hx)) + lambda / (2*m) * sum(theta1toend.^2);
 
 % display("calculated J");
 
@@ -34,11 +34,11 @@ for (JIndex = 1: size(X,2))
 	
 	if (JIndex == 1) 
 	
-		tempGrad = 1 / m * (gz - y)' * X(:,JIndex);
+		tempGrad = 1 / m * (hx - y)' * X(:,JIndex);
 		% display("calculated J = 1 (j=0)");
 	else
 	
-		tempGrad = (1 / m * (gz - y)' * X(:,JIndex)) + lambda/m * theta(JIndex,1);
+		tempGrad = (1 / m * (hx - y)' * X(:,JIndex)) + lambda/m * theta(JIndex,1);
 		% display("calculated J = " + JIndex);
 	endif
 	

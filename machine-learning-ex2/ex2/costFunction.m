@@ -26,9 +26,17 @@ hx = 1 ./ (1 + e .^ -z);
 
 J = 1 ./ m * ( -y' * log(hx) - (1.-y)' * log(1-hx));
 
+accGrad = [];
 
-hxminusy = x'
-grad = 1 / m * X' .* (hxminusy);
+for (JIndex = 1: size(X,2)) 
+	tempGrad = [];
+	
+	tempGrad = 1 / m * (hx - y)' * X(:,JIndex);
+	
+	accGrad = [accGrad; tempGrad];
+end
+
+grad = accGrad;
 
 
 
