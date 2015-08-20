@@ -41,6 +41,7 @@ z = X * theta;
 hx = 1 ./ (1 + e .^ -z);
 
 theta1toend = theta; 
+
 theta1toend(1) = 0; 
 
 J = 1 / m * ( -y' * log(hx) - ((1.-y)' * log(1-hx))) + lambda / (2*m) * sum(theta1toend.^2);
@@ -48,7 +49,6 @@ J = 1 / m * ( -y' * log(hx) - ((1.-y)' * log(1-hx))) + lambda / (2*m) * sum(thet
 hxminusy = hx - y;
 
 grad = grad + (1 / m * X' * hxminusy) + ((lambda / m) .* theta1toend);
-
 
 % =============================================================
 

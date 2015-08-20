@@ -2,10 +2,6 @@ function [all_theta] = oneVsAll(X, y, num_labels, lambda)
 %ONEVSALL trains multiple logistic regression classifiers and returns all
 %the classifiers in a matrix all_theta, where the i-th row of all_theta 
 %corresponds to the classifier for label i
-%   [all_theta] = ONEVSALL(X, y, num_labels, lambda) trains num_labels
-%   logisitc regression classifiers and returns each of these classifiers
-%   in a matrix all_theta, where the i-th row of all_theta corresponds 
-%   to the classifier for label i
 
 % Some useful variables
 m = size(X, 1);
@@ -49,11 +45,26 @@ X = [ones(m, 1) X];
 %                 initial_theta, options);
 %
 
+% loop through each class
+temp_theta = [];
 
+for(c=1 : num_labels)
 
+	% for each class tune row c theta
+	current_theta = all_theta(c,:)';
+	
+	options = optimset('GradObj', 'on', 'MaxIter', 50);
+	
+    current_theta = ...
+         fmincg (@(t)(lrCostFunction(t, X, (y == c), lambda)), ...
+                 current_theta, options);
+	
+	% recompose all theta. each row is the tetha for each class	 
+	temp_theta = [temp_theta; current_theta'];
 
+end
 
-
+all_theta = temp_theta;
 
 
 

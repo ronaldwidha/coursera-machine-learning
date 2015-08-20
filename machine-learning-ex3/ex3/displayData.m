@@ -51,8 +51,8 @@ end
 % Display Image
 h = imagesc(display_array, [-1 1]);
 
-% Do not show axis
-%axis image off
+% Do not show axis 
+% axis image off %turning this off due to an issue with Octave 3.8.2 : https://www.coursera.org/learn/machine-learning/module/mZYiz/discussions/YlOmkiWsEeWeUyIAC44Ejw
 
 drawnow;
 
