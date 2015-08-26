@@ -75,10 +75,12 @@ end
 
 % calculate hypothesis - this is flexible can handle more layers
 thetas = { Theta1, Theta2 };
+gzs = {};
 gz = X;
 
 for l=1:(size(thetas, 2))
-    gz = hypothesis(gz, thetas{l});    
+    gz = hypothesis(gz, thetas{l}); 
+    gzs{l} = gz;
 end
 hx = gz;
 
@@ -104,7 +106,7 @@ for l=1:(size(thetas, 2))
     thetasWithoutBias{l} = thetas{l}(:,2:end);    
 endfor
 
-Regularization = 0
+Regularization = 0;
 for l=1:(size(thetasWithoutBias, 2))
     % square. then sum up the row. then sum up the columns
     Regularization = Regularization + sum( sum(thetasWithoutBias{l}.^2,1), 2);
@@ -112,7 +114,11 @@ endfor
 
 J += lambda / (2 * m) * Regularization;
 
+% gradient
+% --------
 
+%Theta1_grad = gzs{1} * (1-gzs{1}); 
+%Theta2_grad = gzs{2} * (1-gzs{2});
 % -------------------------------------------------------------
 
 % =========================================================================
