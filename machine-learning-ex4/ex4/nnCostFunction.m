@@ -62,13 +62,13 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
-% part1
+% PART 1
+% ======
 
 % cost
 % ----
 
 function a = hypothesis(xi, theta)
-    xi = [ones(size(xi,1),1) xi];
     z = xi * theta';
     a = sigmoid(z);
 end
@@ -76,11 +76,22 @@ end
 % calculate hypothesis - this is flexible can handle more layers
 thetas = { Theta1, Theta2 };
 gzs = {};
-gz = X;
+
+% add bias
+gz = [ones(size(X,1),1) X];
+gzs{1} = gz;
 
 for l=1:(size(thetas, 2))
+    
     gz = hypothesis(gz, thetas{l}); 
-    gzs{l} = gz;
+        
+    % add bias if not output layer
+    if l != size(thetas,2) 
+        gz = [ones(size(gz,1),1) gz];
+    endif
+    
+    % store for later
+    gzs{l+1} = gz;
 end
 hx = gz;
 
@@ -114,17 +125,61 @@ endfor
 
 J += lambda / (2 * m) * Regularization;
 
+
+
+% PART 2
+% ======
+
+delta = {};
+Delta = {zeros(size(Theta1)), zeros(size(Theta2))};
+
+for t=1:m 
+    % Point 1 - put bias on every single data
+    a1 = [1 ; X(t, :)'];
+    z2 = Theta1 * a1;
+        
+    a2 = [1 ; sigmoid(z2)];
+    z3 = Theta2 * a2;
+    a3 = sigmoid(z3);
+    
+    % point 2
+    delta{3} = zeros(num_labels,1);
+    
+    for k=1:num_labels
+        delta{3}(k) = a3(k) - ymatrix(t,k);
+    endfor
+    
+    % point 3
+    delta{2} =  Theta2' * delta{3} .* sigmoidGradient([1; z2]); 
+    
+    % point 4
+    % get rid of delta for bias
+    delta{2} = delta{2}(2:end);
+    
+    Delta{1} += delta{2} * (a1'); 
+    Delta{2} += delta{3} * (a2');
+ 
+endfor
+
 % gradient
 % --------
 
-%Theta1_grad = gzs{1} * (1-gzs{1}); 
-%Theta2_grad = gzs{2} * (1-gzs{2});
+Theta1_grad = 1 / m .* Delta{1};
+Theta2_grad = 1 / m .* Delta{2};
+
+% regularized gradient
+% ---------------------
+
+% update only 2nd column and beyond since, 1st column is weighting for bias
+% also remove delta from bias
+Theta1_grad(:,2:end)= 1 / m .* Delta{1}(:,2:end) + lambda / m .* Theta1(:,2:end); 
+Theta2_grad(:,2:end)= 1 / m .* Delta{2}(:,2:end) + lambda / m .* Theta2(:,2:end); 
+
 % -------------------------------------------------------------
 
 % =========================================================================
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
-
 
 end

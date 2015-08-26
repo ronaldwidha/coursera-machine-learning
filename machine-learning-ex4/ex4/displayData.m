@@ -52,7 +52,7 @@ end
 h = imagesc(display_array, [-1 1]);
 
 % Do not show axis
-axis image off
+% axis image off
 
 drawnow;
 
