@@ -64,34 +64,54 @@ Theta2_grad = zeros(size(Theta2));
 
 % part1
 
+% cost
+% ----
+
 function a = hypothesis(xi, theta)
     xi = [ones(size(xi,1),1) xi];
     z = xi * theta';
     a = sigmoid(z);
 end
 
+% calculate hypothesis - this is flexible can handle more layers
 thetas = { Theta1, Theta2 };
-
 gz = X;
 
 for l=1:(size(thetas, 2))
     gz = hypothesis(gz, thetas{l});    
 end
-
 hx = gz;
 
 % convert label into output network
-ymatrix = zeros(m, num_labels);
- 
+ymatrix = zeros(m, num_labels); 
 for k = 1:num_labels
     ymatrix(:, k) = (y == k);
 endfor
 
+% calculate cost
 for i =1:m
     J += sum( -ymatrix(i,:) * log(hx(i,:)') - ((1.-ymatrix(i,:)) * log(1-hx(i,:)')));
-end
+endfor
 
 J /= m;
+
+% cost with regularization
+% ------------------------
+
+% take off the bias
+thetasWithoutBias = {};
+for l=1:(size(thetas, 2))
+    thetasWithoutBias{l} = thetas{l}(:,2:end);    
+endfor
+
+Regularization = 0
+for l=1:(size(thetasWithoutBias, 2))
+    % square. then sum up the row. then sum up the columns
+    Regularization = Regularization + sum( sum(thetasWithoutBias{l}.^2,1), 2);
+endfor
+
+J += lambda / (2 * m) * Regularization;
+
 
 % -------------------------------------------------------------
 
