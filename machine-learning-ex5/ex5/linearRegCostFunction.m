@@ -19,16 +19,19 @@ grad = zeros(size(theta));
 %               You should set J to the cost and grad to the gradient.
 %
 
+% linear regression - do not need sigmoid activation
+hx =  X * theta;
 
+% do not normalize the first feature
+theta1toend = theta; 
+theta1toend(1) = 0; 
 
+delta = hx-y;
 
+J = 1 / (2 * m) * ( delta' * delta ) + lambda / (2*m) * sum(theta1toend.^2);
 
-
-
-
-
-
-
+% for j = 0 do not normalize, so use theta1toend
+grad = grad + (1 / m * X' * delta) + ((lambda / m) .* theta1toend);
 
 % =========================================================================
 
