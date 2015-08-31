@@ -15,6 +15,9 @@ sim = 0;
 %               sigma
 %
 %
+
+% todo: probably need to feature scale to make this more general
+
 sim = exp ( - 1 * sum( (x1-x2).^2) / (2 * sigma ^2));
 
 
