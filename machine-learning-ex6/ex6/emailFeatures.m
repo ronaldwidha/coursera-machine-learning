@@ -48,12 +48,13 @@ x = zeros(n, 1);
 %
 %
 
+% so that we can do it in one pass of the indices 
+% (rather than going through the dictionary)
+word_indices = sort(word_indices);
 
-
-
-
-
-
+for i=1:size(word_indices,1) 
+	x(word_indices(i)) = 1;
+endfor
 
 % =========================================================================
     
