@@ -23,8 +23,44 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+% possibleValues = { 0.01, 0.03, 0.1, 0.3, 1 };
+%possibleValues = { 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30 };
+%minerror = 10000000;
 
+% display('this is going to take a while');
 
+% brute force
+% though by intuition, it needs to be around the middle values.
+
+%for i=1:size(possibleValues,2)
+%	for j=1:size(possibleValues,2)
+		
+%		C = possibleValues{i};
+%		sigma = possibleValues{j};
+%
+%		%disp("C:"), disp(C);
+%		%disp("sigma:"), disp(sigma);
+%		
+%		model = svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+%		predictions = svmPredict(model, Xval);
+%		error = mean(double(predictions ~= yval));
+%
+%		disp(error);
+%
+%		if error < minerror
+%			minerror = error;
+%			minC = C;
+%			minSigma = sigma;
+%		endif
+%	endfor
+%endfor
+
+% to speed up execution time
+sigma = 0.1 % minSigma;
+C = 1 % minC;
+
+%display("optimal sigma"), display(sigma);
+%display("optimal C"), display(C);
 
 
 
