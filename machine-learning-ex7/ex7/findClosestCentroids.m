@@ -22,7 +22,16 @@ idx = zeros(size(X,1), 1);
 %
 
 
-
+for i=1:size(X,1)
+		
+	diffs = centroids - repmat(X(i,:), K,1); % duplicate the rows of v and subtract
+	
+	dists = sum(diffs .^2, 2); % sum the squares of the columns
+	
+	[val index] = min(dists);
+	
+	idx(i) = index;
+end
 
 
 
