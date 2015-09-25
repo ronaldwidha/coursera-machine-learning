@@ -26,7 +26,23 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+% combine the X and its centroid assignments
+Xmap = [X idx];
 
+for k=1:K
+	% display("k:");
+	% display(k);
+	
+	% get just the X assigned to the current centroid
+	cxIndex = n+1;
+	Xassigned = X(Xmap(:, cxIndex) == k, :);
+	
+	% display("size of map:");
+	% display(size(Xassigned));
+	
+	% calculate mean
+	centroids(k, :) = mean(Xassigned);
+endfor
 
 
 
