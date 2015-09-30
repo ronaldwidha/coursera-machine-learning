@@ -46,7 +46,10 @@ Theta_grad = zeros(size(Theta));
 
 M = (X * Theta') - Y;
 
-J = sum(sum(R .* M .^2))/2;
+regularized_Theta = lambda / 2 * sum(sum(Theta.^2));
+regularized_X = lambda / 2 * sum(sum(X.^2));
+
+J = sum(sum(R .* M .^2))/2 + regularized_Theta + regularized_X;
 
 X_grad = (R .* M) * Theta;
 
